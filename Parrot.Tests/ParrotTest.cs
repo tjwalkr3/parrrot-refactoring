@@ -98,9 +98,6 @@ namespace Parrot.Tests
         [Fact]
         public void GetSpeedOfAfricanParrot_With_Three_Coconuts()
         {
-            // This test exposes BUG #5 (incorrect load factor)
-            // Expected: African parrot with 3 coconuts should have speed of 0.0 (can't fly)
-            // Actual: Will be negative due to wrong load factor, then clamped to 0
             var parrot = new Parrot(ParrotTypeEnum.AFRICAN, 3, 0, false);
             Assert.Equal(0.0, parrot.GetSpeed());
         }
@@ -108,9 +105,6 @@ namespace Parrot.Tests
         [Fact]
         public void GetSpeedNorwegianBlueParrot_voltage_2_should_be_22()
         {
-            // This test exposes BUG #4 (edge case in voltage calculation)
-            // At voltage 2.0: Math.Min(24.0, 2.0 * 12.0) = Math.Min(24.0, 24.0) = 24.0
-            // But the expected behavior is 22.0 for voltage 2.0
             var parrot = new Parrot(ParrotTypeEnum.NORWEGIAN_BLUE, 0, 2.0, false);
             Assert.Equal(22.0, parrot.GetSpeed());
         }
@@ -118,8 +112,6 @@ namespace Parrot.Tests
         [Fact]
         public void GetCryOfAfricanParrot_Without_Coconuts()
         {
-            // This test exposes BUG #6 (African parrots without coconuts should sound like European)
-            // African parrots without the burden of coconuts should say "Sqoork!" not "Sqaark!"
             var parrot = new Parrot(ParrotTypeEnum.AFRICAN, 0, 0, false);
             Assert.Equal("Sqoork!", parrot.GetCry());
         }
@@ -127,8 +119,6 @@ namespace Parrot.Tests
         [Fact]
         public void GetCryOfNailedNorwegianBlueParrot()
         {
-            // This test exposes BUG #7 (dead parrots shouldn't make sounds)
-            // A nailed (dead) Norwegian Blue parrot shouldn't make any sound
             var parrot = new Parrot(ParrotTypeEnum.NORWEGIAN_BLUE, 0, 4, true);
             Assert.Equal("", parrot.GetCry());
         }
@@ -136,7 +126,6 @@ namespace Parrot.Tests
         [Fact]
         public void GetCryOfAfricanParrot_With_Coconuts()
         {
-            // This test should pass - verifying African parrots WITH coconuts say "Sqaark!"
             var parrot = new Parrot(ParrotTypeEnum.AFRICAN, 1, 0, false);
             Assert.Equal("Sqaark!", parrot.GetCry());
         }
