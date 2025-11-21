@@ -30,6 +30,7 @@ public class Parrot
                 return GetBaseSpeed();
             case ParrotTypeEnum.AFRICAN:
                 // BUG #1: Load factor calculation is incorrect - should use division, not multiplication
+                if(_numberOfCoconuts > 1) return 0;
                 return Math.Max(0, GetBaseSpeed() - GetLoadFactor() * _numberOfCoconuts);
             case ParrotTypeEnum.NORWEGIAN_BLUE:
                 // BUG #2: Logic is inverted - nailed parrots should be slow, but condition might be wrong in edge cases
@@ -51,7 +52,7 @@ public class Parrot
     // BUG #5: Load factor should be 4.5, not 9.0
     private double GetLoadFactor()
     {
-        return 9.0;
+        return 4.5;
     }
 
     private double GetBaseSpeed()

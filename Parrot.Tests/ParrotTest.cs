@@ -48,7 +48,7 @@ namespace Parrot.Tests
         public void GetSpeedOfAfricanParrot_With_One_Coconut()
         {
             var parrot = new Parrot(ParrotTypeEnum.AFRICAN, 1, 0, false);
-            Assert.Equal(3.0, parrot.GetSpeed());
+            Assert.Equal(7.5, parrot.GetSpeed());
         }
 
         [Fact]
@@ -103,16 +103,6 @@ namespace Parrot.Tests
             // Actual: Will be negative due to wrong load factor, then clamped to 0
             var parrot = new Parrot(ParrotTypeEnum.AFRICAN, 3, 0, false);
             Assert.Equal(0.0, parrot.GetSpeed());
-        }
-
-        [Fact]
-        public void GetSpeedOfAfricanParrot_With_One_Coconut_Should_Be_7_Point_5()
-        {
-            // This test exposes BUG #5 (load factor should be 4.5, not 9.0)
-            // With correct load factor of 4.5: speed = 12.0 - 4.5 * 1 = 7.5
-            // With buggy load factor of 9.0: speed = 12.0 - 9.0 * 1 = 3.0
-            var parrot = new Parrot(ParrotTypeEnum.AFRICAN, 1, 0, false);
-            Assert.Equal(7.5, parrot.GetSpeed());
         }
 
         [Fact]
