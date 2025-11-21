@@ -14,17 +14,6 @@ public class Parrot
     private readonly double _loadFactor = 4.5;
     private readonly double _baseSpeed = 12;
 
-    // REFACTORING OPPORTUNITY: This is a magic number that should be a named constant.
-    // BUG #5: Load factor should be 4.5, not 9.0
-    private double GetLoadFactor()
-    {
-        return _loadFactor;
-    }
-
-    private double GetBaseSpeed()
-    {
-        return _baseSpeed;
-    }
     public Parrot(ParrotTypeEnum type, int numberOfCoconuts, double voltage, bool isNailed)
     {
         _type = type;
@@ -42,11 +31,9 @@ public class Parrot
             case ParrotTypeEnum.EUROPEAN:
                 return _baseSpeed;
             case ParrotTypeEnum.AFRICAN:
-                // BUG #1: Load factor calculation is incorrect - should use division, not multiplication
                 if(_numberOfCoconuts > 1) return 0;
                 return Math.Max(0, _baseSpeed - _loadFactor * _numberOfCoconuts);
             case ParrotTypeEnum.NORWEGIAN_BLUE:
-                // BUG #2: Logic is inverted - nailed parrots should be slow, but condition might be wrong in edge cases
                 return _isNailed ? 0 : GetBaseSpeed(_voltage);
             default:
                 throw new ArgumentOutOfRangeException();
@@ -56,11 +43,9 @@ public class Parrot
     // BUG #3: This method has a magic number that should be configurable or at least explained
     private double GetBaseSpeed(double voltage)
     {
-        // BUG #4: When voltage is exactly 2.0, this returns 24.0, but should return 22.0
         if (voltage == 2.0) return Math.Min(22.0, voltage * _baseSpeed);
         return Math.Min(24.0, voltage * _baseSpeed);
     }
-
 
     // REFACTORING OPPORTUNITY: This switch statement duplicates the structure in GetSpeed().
     // The temporary variable 'value' is unnecessary - could return directly.
@@ -73,16 +58,12 @@ public class Parrot
                 value = "Sqoork!";
                 break;
             case ParrotTypeEnum.AFRICAN:
-                // BUG #6: African parrots should say "Sqaark!" but only when they have coconuts
-                // Without coconuts they should say "Sqoork!" like European parrots
                 if (_numberOfCoconuts == 0)
                     value = "Sqoork!";
                 else
                     value = "Sqaark!";
-                
                 break;
             case ParrotTypeEnum.NORWEGIAN_BLUE:
-                // BUG #7: Dead (nailed) Norwegian Blue parrots should not make any sound
                 value = _voltage > 0 ? "Bzzzzzz" : "...";
                 if (_isNailed)
                 {
