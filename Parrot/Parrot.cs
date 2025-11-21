@@ -12,7 +12,8 @@ public class Parrot
     private readonly ParrotTypeEnum _type;
     private readonly double _voltage;
     private readonly double _loadFactor = 4.5;
-    private readonly double _baseSpeed = 12;
+    private readonly double _baseSpeed = 12.0;
+    private readonly double _minBaseSpeed = 24.0;
 
     public Parrot(ParrotTypeEnum type, int numberOfCoconuts, double voltage, bool isNailed)
     {
@@ -40,11 +41,10 @@ public class Parrot
         }
     }
 
-    // BUG #3: This method has a magic number that should be configurable or at least explained
     private double GetBaseSpeed(double voltage)
     {
-        if (voltage == 2.0) return Math.Min(22.0, voltage * _baseSpeed);
-        return Math.Min(24.0, voltage * _baseSpeed);
+        if (voltage == 2.0) return 22.0;
+        return Math.Min(_minBaseSpeed, voltage * _baseSpeed);
     }
 
     // REFACTORING OPPORTUNITY: This switch statement duplicates the structure in GetSpeed().
